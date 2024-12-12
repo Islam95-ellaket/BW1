@@ -1,22 +1,31 @@
 
-
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Outfit:wght@300&display=swap');
 
 body{
     display: flex;
     flex-direction: column;
     gap: 6em;
     background-image: url(/assets/bg.jpg);
+    background-size: cover;
     color: white;
-    margin-right: 5em;
-    margin-left: 5em;
+    justify-content: center;
+    align-items: center;
+
+
+    
+    
+    
 
     
 }
 
 
-header {
+main :first-child div {
+    display: flex;
+    align-content: flex-start;
     width: 20em;
-    height: 1em;
+    height: 2em;
 }
 
 #logo img {
@@ -27,18 +36,28 @@ main{
     display: flex;
     flex-direction: column;
     
-  
-}
-main :first-child div{
     
-    width: 20em;
+  
 }
 
 h2 {
-    font-size: 60px;
-    font-weight: 400;
     
+    
+    display: flex;
+    flex-direction: column;
+   
+
+    font-family: "Outfit", serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    font-size: 60px;
+
 }
+
+
+    
+
 
 
 #instructions {
@@ -46,19 +65,26 @@ h2 {
     flex-direction: column;
     font-size: 16px;
     width: 70em;
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
 
 }
 
 h3 {
     color: #D20094 ;
-    font-weight: 400;
+    font-weight: 600;
 }
 
 
 
 #clause {
     display: flex;
-    
+    font-family: "Outfit", serif;
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+ 
 }
 
 
@@ -82,8 +108,20 @@ h3 {
 #next b {
     font-size: large;
     font-weight: bolder;
+
     
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
