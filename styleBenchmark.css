@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Outfit:wght@300&display=swap');
+
+
+body {
+    display: flex;
+    flex-direction: column;
+    background-image: url(/assets/bg.jpg);
+    background-size: cover;
+    
+
+}
+
+#logo img {
+    width: 8em;
+}
+
+
+main {
+    display: flex;
+    color: white;
+    flex-direction: column;
+    
+}
+
+#timerDisplay {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.question h1 {
+    font-family: "Outfit", serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    font-size: 60px;
+    
+}
+
+
+
+.answers {
+
+}
+
+#startButton {
+    width: 5em;
+}
+
+
+#questionCount {
+    color: white;
+}
