@@ -134,7 +134,7 @@ const shuffleArray = (array) => {
 const populateView = (questions, questionIndex) => {  //funzione che fa caricare nuovo contenitore all'interno di Questions con il punteggio ottenuto ed il responso
 
     if (questionIndex >= questions.length) {
-        const endView = document.createElement("div")
+        const endView = document.createElement("div") //ripulisco il container e riscrivo.
         endView.style.display = "block"
         const endScore = document.getElementById("endScore")
         endScore.innerHTML = `<h3> Il tuo punteggio è ${score}/${questions.length}</h3>`
@@ -234,18 +234,16 @@ init()
 
 //Funzione per calcolare il punteggio
 const updateScore = function () {
-
+    let count = 0
     for (let questionNumber = 1; questionNumber<= questions.length; questionNumber++) {
-        let count = questionNumber
+        count++
         if ((questions.incorrect_answers) || (timeRemaining = 0)) {
 
-            questionNumber++
-
-        } else {
-            score++
-            questionNumber++
+            continue
+        } 
+        score++
             
-        } console.log(count, score)
+        console.log(count, score)
     }
     let results = [count, score]
     return results
