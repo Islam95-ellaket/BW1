@@ -29,11 +29,12 @@ main{
     
   
 }
-#welcome {
-    display: flex;
+main :first-child div{
+    
     width: 20em;
 }
-#welcome h1 {
+
+h2 {
     font-size: 60px;
     font-weight: 400;
     
@@ -53,10 +54,7 @@ h3 {
     font-weight: 400;
 }
 
-#clauseNext {
-    display: flex;
-    gap: 50em;
-}
+
 
 #clause {
     display: flex;
@@ -86,6 +84,7 @@ h3 {
     font-weight: bolder;
     
 }
+
 
 
 
