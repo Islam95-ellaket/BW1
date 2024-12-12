@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benchmark Page</title>
+    <link rel="stylesheet" href="css.css">
+</head>
+
+<body onload="startTime()">
+
+    <header>
+        <div id="logo">
+            <img src="/assets/epicode_logo.png"  alt="epicode logo"> 
+        </div>
+    </header>
+
+    <main>
+
+        <div id="timerDisplay">
+            Tempo rimanente: <span id="time">60</span> secondi
+        </div>
+
+        <div class="question">
+            <h1>How can I create a <b>checkbox in HTML?</b></h1>
+        </div>
+
+        <fieldset>
+            <legend>answers</legend>
+            <div class="answers">
+                <input name="answer" type="radio" id="answer1" value="wrong">
+                <label for="answer1"> risposta 1 </label>
+            </div>
+            <div class="answers">
+                <input name="answer" type="radio" id="answer2" value="correct">
+                <label for="answer2"> risposta 2 </label>
+            </div>
+            <div class="answers">
+                <input name="answer" type="radio" id="answer3" value="wrong">
+                <label for="answer3"> risposta 3 </label>
+            </div>
+            <div class="answers">
+                <input name="answer" type="radio" id="answer4" value="wrong">
+                <label for="answer4"> risposta 4 </label>
+            </div>
+            <button id="startButton">Inizia il Quiz</button>
+        </fieldset>
+
+        <div id="result" class="hidden"></div>
+
+    </main>
+
+    <footer>
+        <div id="questionCount">
+            <p>QUESTION 1/10</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
