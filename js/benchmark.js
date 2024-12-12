@@ -251,3 +251,4 @@ const updateScore = function () {
     return results
 }
 
+console.log('ciao')
