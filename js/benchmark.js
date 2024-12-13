@@ -104,7 +104,7 @@ function checkbox() {
         const warning = document.getElementById('warning');
         const click = document.getElementById('click').checked;
         if (click) {
-            window.location.href = 'index2.html';
+            window.location.href = 'benchmark.html';
         } else {
             alert('Devi cliccare sulla checkbox per procedere!');
         }
@@ -129,14 +129,14 @@ let timer;
    
            if (timeRemaining <= 0) {
                clearInterval(timer);
-               window.location.href = 'index3.html';
+               window.location.href = 'benchmark.html';
            }
        }, 1000);
    }
    
    document.querySelectorAll('input[name="answer"]').forEach((radio) => {
        radio.addEventListener('click', function() {
-           window.location.href = 'index3.html';
+           window.location.href = 'benchmark.html';
        });
    });
    
