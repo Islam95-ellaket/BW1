@@ -104,7 +104,7 @@ function checkbox() {
         const warning = document.getElementById('message')
         const click = document.getElementById('click').checked
         if (click) {
-            window.location.href = 'benchmark.html'
+            window.location.href = 'benchmark.html';
         } else {
             // Mostra il messaggio di errore
             message.style.display = 'block'
@@ -115,7 +115,33 @@ document.addEventListener('DOMContentLoaded', (event) => {
     checkbox();
 
 });
-
+let timer;
+   let timeRemaining = 60;
+   
+   function startTimer() {
+       document.getElementById('timeText').textContent = timeRemaining;
+   
+       timer = setInterval(function() {
+           timeRemaining--;
+           document.getElementById('timeText').textContent = timeRemaining;
+           
+           let offset = 282.6 - (timeRemaining / 60) * 282.6;
+           document.querySelector("#timer circle:nth-child(2)").style.strokeDashoffset = offset;
+   
+           if (timeRemaining <= 0) {
+               clearInterval(timer);
+               window.location.href = 'benchmark.html';
+           }
+       }, 1000);
+   }
+   
+   document.querySelectorAll('input[name="answer"]').forEach((radio) => {
+       radio.addEventListener('click', function() {
+           window.location.href = 'benchmark.html';
+       });
+   });
+   
+   startTimer();
 // Funzioni pagina benchmark
 
 let score = 0 // dichiariamo e inizializziamo il punteggio
