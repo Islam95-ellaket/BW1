@@ -98,6 +98,9 @@ const questions = [
     },
 ];
 
+let score = 0; // dichiariamo e inizializziamo il punteggio
+let questionIndex
+
 //Funzione pagina welcome
 function checkbox() {
     document.getElementById('proceedButton').addEventListener('click', function () {
@@ -115,10 +118,42 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 });
 
-// Funzioni pagina benchmark
+//Funzione per calcolare il punteggio
+const updateScore = (question, answer) => {
+    const currectAnswer = question.correct_answer
+    const userAnswrer = answer.getAttribute("value")
 
-let score = 0; // dichiariamo e inizializziamo il punteggio
-let questionIndex
+    console.log(currectAnswer, userAnswrer)
+
+    if (currectAnswer === userAnswrer) {
+        console.log("corretto")
+        score = score + 1
+        return
+    }
+
+    console.log("sbagliato")
+    return
+
+
+    /*
+     for (let questionNumber = 1; questionNumber<= questions.length; questionNumber++) {
+         let count = questionNumber
+         if ((questions.incorrect_answers) || (timeRemaining = 0)) {
+ 
+             questionNumber++
+ 
+         } else {
+             score++
+             questionNumber++
+             
+         } console.log(count, score)
+     }
+     let results = [count, score]
+     return results
+     */
+}
+
+
 
 
 //Funzione per mescolare le risposte
@@ -134,12 +169,17 @@ const shuffleArray = (array) => {
 const populateView = (questions, questionIndex) => {  //funzione che fa caricare nuovo contenitore all'interno di Questions con il punteggio ottenuto ed il responso
 
     if (questionIndex >= questions.length) {
+        const viewContainer = document.getElementById("viewContainer")
+        viewContainer.style.display = "none"
+
         const endView = document.createElement("div")
         endView.style.display = "block"
         const endScore = document.getElementById("endScore")
         endScore.innerHTML = `<h3> Il tuo punteggio è ${score}/${questions.length}</h3>`
+        const resultJudgement = document.createElement('p')
+
         if (score >= 6) {
-            const resultJudgement = document.createElement('p')
+
             resultJudgement.textContent = 'promosso!'
             endScore.appendChild(resultJudgement)
         } else {
@@ -179,9 +219,6 @@ const populateView = (questions, questionIndex) => {  //funzione che fa caricare
     // Aggiorna indice di QUESTION fino alla lunghezza massima di questions
     questionCount.innerHTML = `<p>QUESTION ${questionIndex + 1}/${questions.length}</p>`
 
-
-
-
     // Crea e aggiungi i radio buttons
     allAnswers.forEach((answer, index) => {
         const div = document.createElement("div")
@@ -210,13 +247,11 @@ const populateView = (questions, questionIndex) => {  //funzione che fa caricare
     inputs.forEach((input, index) => {
         input.addEventListener("click", (event) => {
             //console.log(event.currentTarget)
+            updateScore(selectedQuestion, event.currentTarget)
 
             setTimeout(() => {
                 populateView(questions, questionIndex + 1);
             }, 1000)
-
-
-
         })
     })
 
@@ -232,23 +267,5 @@ const init = () => {
 
 init()
 
-//Funzione per calcolare il punteggio
-const updateScore = function () {
 
-    for (let questionNumber = 1; questionNumber<= questions.length; questionNumber++) {
-        let count = questionNumber
-        if ((questions.incorrect_answers) || (timeRemaining = 0)) {
 
-            questionNumber++
-
-        } else {
-            score++
-            questionNumber++
-            
-        } console.log(count, score)
-    }
-    let results = [count, score]
-    return results
-}
-
-console.log('ciao')
