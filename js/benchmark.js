@@ -99,26 +99,30 @@ const questions = [
 ];
 
 //Funzione pagina welcome
-function checkbox() {
+/*function checkbox() {
     document.getElementById('proceedButton').addEventListener('click', function () {
-        const warning = document.getElementById('warning');
-        const click = document.getElementById('click').checked;
+        const warning = document.getElementById('message')
+        const click = document.getElementById('click').checked
         if (click) {
-            window.location.href = 'index2.html';
+            window.location.href = 'benchmark.html';
         } else {
-            alert('Devi cliccare sulla checkbox per procedere!');
+            // Mostra il messaggio di errore
+            message.style.display = 'block'
         }
     });
 }
 document.addEventListener('DOMContentLoaded', (event) => {
     checkbox();
 
-});
+});*/
 
 // Funzioni pagina benchmark
 
-let score = 0; // dichiariamo e inizializziamo il punteggio
-let questionIndex
+
+
+
+let score = 0 // dichiariamo e inizializziamo il punteggio
+// let questionIndex deve essere indice della domanda corrente
 
 
 //Funzione per mescolare le risposte
@@ -130,15 +134,41 @@ const shuffleArray = (array) => {
     return array;
 };
 
+//Funzione per calcolare il punteggio
+const updateScoreAndre = function () {
+    let count = 0
+    let score = 0
+    for (let questionNumber = 0; questionNumber <= questions.length; questionNumber++) {
+
+        count++
+        const currentQuestion = quenstions[questionNumber]
+
+        if ((currentQuestion?.incorrect_answers) || (timeRemaining = 0)) {
+
+            continue
+
+        }
+
+        score++
+
+        console.log(count, score)
+    }
+    let results = [count, score]
+    return results
+}
+
 //Funzione per popolare i radio buttons
 const populateView = (questions, questionIndex) => {  //funzione che fa caricare nuovo contenitore all'interno di Questions con il punteggio ottenuto ed il responso
 
+    /* for (let questionIndex = 0; questionIndex < questions.length; questionIndex++) {
+        //const index = questions[questionIndex];
+    
     if (questionIndex >= questions.length) {
-        const endView = document.createElement("div")
-        endView.style.display = "block"
-        const endScore = document.getElementById("endScore")
-        endScore.innerHTML = `<h3> Il tuo punteggio è ${score}/${questions.length}</h3>`
-        if (score >= 6) {
+        const endView = document.getElementById("question").innerHTML = "" //ripulisco il container e riscrivo.
+        //endView.style.display = "block"
+        //const endScore = document.getElementById("endScore")
+        
+        if (results.score >= 6) {
             const resultJudgement = document.createElement('p')
             resultJudgement.textContent = 'promosso!'
             endScore.appendChild(resultJudgement)
@@ -147,11 +177,14 @@ const populateView = (questions, questionIndex) => {  //funzione che fa caricare
             endScore.appendChild(resultJudgement)
         }
 
-        return score
-    }
+        // return score
+    }   endView.innerHTML = `<h3> Il tuo punteggio è ${results.score}/${questions.length}</h3>`
+       
+    }*/
 
-    // Seleziona una domanda
-    const selectedQuestion = questions[questionIndex];
+
+    const selectedQuestion = questions[questionIndex]; 
+    //console.log(questionIndex) Seleziona una domanda
 
     // mergedArray è un array unico con spread operator per fare la concatenazione di 2 array corret_answer e incorret_answers cioè ci restituisce un unico array con la somma della risposta corretta + risposte errate ovvero tutte le possibili risposte
     const mergedArray = [
@@ -189,13 +222,13 @@ const populateView = (questions, questionIndex) => {  //funzione che fa caricare
         const radio = document.createElement("input");
 
 
-        // Configura il radio button
+        // Configura radio button
         radio.type = "radio";
         radio.name = `answer-${questionIndex}`;
         radio.value = answer;
         radio.id = `answer-${questionIndex}-${index}`;
 
-        // Configura il label
+        // Configura label
         label.htmlFor = radio.id;
         label.textContent = answer;
 
@@ -203,7 +236,7 @@ const populateView = (questions, questionIndex) => {  //funzione che fa caricare
         radioGroup.appendChild(div);
         div.appendChild(radio);
         div.appendChild(label);
-    });
+    })
 
     // Aggiorna il testo della domanda e dei radio buttons e configura rallenta di 1 secondo il passaggio alla domanda successiva
     const inputs = document.querySelectorAll("input")
@@ -220,35 +253,70 @@ const populateView = (questions, questionIndex) => {  //funzione che fa caricare
         })
     })
 
+    document.querySelectorAll(`input[name="answer-${questionIndex}"]`).forEach((radio) => {
+        radio.addEventListener('click', function () {
+            //window.location.href = 'benchmark.html'
+            //populateView (questions, questionIndex)
+            nextQuestion()
+  
+        });
+    });
+
+    
+    clearInterval(timer)
+    startTimer();
+
+}
+
+  //Funzionw Timer
+  let timer;
+  let currentQuestionIndex = 0
+
+  function startTimer() {
+      let timeRemaining = 10;
+      document.getElementById('timeText').textContent = timeRemaining;
+
+      timer = setInterval(function () {
+          timeRemaining--;
+          document.getElementById('timeText').textContent = timeRemaining;
+          console.log(timeRemaining)
+
+          let offset = 282.6 - (timeRemaining / 60) * 282.6;
+          document.querySelector("#timer circle:nth-child(2)").style.strokeDashoffset = offset;
+
+          if (timeRemaining <= 0) {
+              clearInterval(timer);
+              // window.location.href = 'benchmark.html'; 
+              //populateView (questions, questionIndex)//Reinderizza alla prossima domanda.
+              nextQuestion()
+          }
+      }, 1000);
+  }
+
+  
+
+function nextQuestion() {
+    currentQuestionIndex++; // Passa alla domanda successiva
+
+
+    if (currentQuestionIndex < questions.length) {  // Controlla se ci sono altre domande
+        populateView(questions,currentQuestionIndex)
+        //clearInterval(timer) // Popola i radio button con la nuova domanda
+        //startTimer(); // Riavvia il timer
+    } else {
+        // Se le domande sono finite, mostra un messaggio o reindirizza a un'altra pagina
+        alert("Hai completato tutte le domande!");
+        // window.location.href = "risultati.html"; // Esempio di reindirizzamento
+    }
 }
 
 
 let currentView = 0
-const init = () => {
+const initialize = () => {
     populateView(questions, currentView);
 
 }
 
 
-init()
+initialize()
 
-//Funzione per calcolare il punteggio
-const updateScore = function () {
-
-    for (let questionNumber = 1; questionNumber<= questions.length; questionNumber++) {
-        let count = questionNumber
-        if ((questions.incorrect_answers) || (timeRemaining = 0)) {
-
-            questionNumber++
-
-        } else {
-            score++
-            questionNumber++
-            
-        } console.log(count, score)
-    }
-    let results = [count, score]
-    return results
-}
-
-console.log('ciao')
