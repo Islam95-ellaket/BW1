@@ -99,7 +99,7 @@ const questions = [
 ];
 
 //Funzione pagina welcome
-function checkbox() {
+/*function checkbox() {
     document.getElementById('proceedButton').addEventListener('click', function () {
         const warning = document.getElementById('message')
         const click = document.getElementById('click').checked
@@ -114,35 +114,12 @@ function checkbox() {
 document.addEventListener('DOMContentLoaded', (event) => {
     checkbox();
 
-});
-let timer;
-   let timeRemaining = 60;
-   
-   function startTimer() {
-       document.getElementById('timeText').textContent = timeRemaining;
-   
-       timer = setInterval(function() {
-           timeRemaining--;
-           document.getElementById('timeText').textContent = timeRemaining;
-           
-           let offset = 282.6 - (timeRemaining / 60) * 282.6;
-           document.querySelector("#timer circle:nth-child(2)").style.strokeDashoffset = offset;
-   
-           if (timeRemaining <= 0) {
-               clearInterval(timer);
-               window.location.href = 'benchmark.html';
-           }
-       }, 1000);
-   }
-   
-   document.querySelectorAll('input[name="answer"]').forEach((radio) => {
-       radio.addEventListener('click', function() {
-           window.location.href = 'benchmark.html';
-       });
-   });
-   
-   startTimer();
+});*/
+
 // Funzioni pagina benchmark
+
+
+
 
 let score = 0 // dichiariamo e inizializziamo il punteggio
 // let questionIndex deve essere indice della domanda corrente
@@ -166,7 +143,7 @@ const updateScoreAndre = function () {
         count++
         const currentQuestion = quenstions[questionNumber]
 
-        if ((currentQuestion.incorrect_answers) /*|| (timeRemaining = 0)*/) {
+        if ((currentQuestion?.incorrect_answers) || (timeRemaining = 0)) {
 
             continue
 
@@ -206,7 +183,8 @@ const populateView = (questions, questionIndex) => {  //funzione che fa caricare
     }*/
 
 
-    const selectedQuestion = questions[questionIndex];  // Seleziona una domanda
+    const selectedQuestion = questions[questionIndex]; 
+    //console.log(questionIndex) Seleziona una domanda
 
     // mergedArray è un array unico con spread operator per fare la concatenazione di 2 array corret_answer e incorret_answers cioè ci restituisce un unico array con la somma della risposta corretta + risposte errate ovvero tutte le possibili risposte
     const mergedArray = [
@@ -244,13 +222,13 @@ const populateView = (questions, questionIndex) => {  //funzione che fa caricare
         const radio = document.createElement("input");
 
 
-        // Configura il radio button
+        // Configura radio button
         radio.type = "radio";
         radio.name = `answer-${questionIndex}`;
         radio.value = answer;
         radio.id = `answer-${questionIndex}-${index}`;
 
-        // Configura il label
+        // Configura label
         label.htmlFor = radio.id;
         label.textContent = answer;
 
@@ -268,13 +246,68 @@ const populateView = (questions, questionIndex) => {  //funzione che fa caricare
 
             setTimeout(() => {
                 populateView(questions, questionIndex + 1);
-            }, 500)
+            }, 1000)
 
 
 
         })
     })
 
+    document.querySelectorAll(`input[name="answer-${questionIndex}"]`).forEach((radio) => {
+        radio.addEventListener('click', function () {
+            //window.location.href = 'benchmark.html'
+            //populateView (questions, questionIndex)
+            nextQuestion()
+  
+        });
+    });
+
+    
+    clearInterval(timer)
+    startTimer();
+
+}
+
+  //Funzionw Timer
+  let timer;
+  let currentQuestionIndex = 0
+
+  function startTimer() {
+      let timeRemaining = 10;
+      document.getElementById('timeText').textContent = timeRemaining;
+
+      timer = setInterval(function () {
+          timeRemaining--;
+          document.getElementById('timeText').textContent = timeRemaining;
+          console.log(timeRemaining)
+
+          let offset = 282.6 - (timeRemaining / 60) * 282.6;
+          document.querySelector("#timer circle:nth-child(2)").style.strokeDashoffset = offset;
+
+          if (timeRemaining <= 0) {
+              clearInterval(timer);
+              // window.location.href = 'benchmark.html'; 
+              //populateView (questions, questionIndex)//Reinderizza alla prossima domanda.
+              nextQuestion()
+          }
+      }, 1000);
+  }
+
+  
+
+function nextQuestion() {
+    currentQuestionIndex++; // Passa alla domanda successiva
+
+
+    if (currentQuestionIndex < questions.length) {  // Controlla se ci sono altre domande
+        populateView(questions,currentQuestionIndex)
+        //clearInterval(timer) // Popola i radio button con la nuova domanda
+        //startTimer(); // Riavvia il timer
+    } else {
+        // Se le domande sono finite, mostra un messaggio o reindirizza a un'altra pagina
+        alert("Hai completato tutte le domande!");
+        // window.location.href = "risultati.html"; // Esempio di reindirizzamento
+    }
 }
 
 

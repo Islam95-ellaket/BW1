@@ -2,7 +2,7 @@
 <html lang="it">
 
 <head>
- <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Benchmark page </title>
 </head>
@@ -22,10 +22,18 @@
 
     <main>
 
-        <div class="timer">
-
-
-
+        <div id="timerDisplay">
+            <svg id="timer" viewBox="0 0 100 100" width="120" height="120"> <!-- lo stile lo mettiamo nel css-->
+                <circle cx="50" cy="50" r="45" stroke="#4A5699" stroke-width="10" fill="none" />
+                <circle cx="50" cy="50" r="45" stroke="#00FFFF" stroke-width="10" fill="none" stroke-dasharray="282.6"
+                    stroke-dashoffset="282.6" />
+                <text x="50%" y="28%" text-anchor="middle" fill="white" font-size="8px" font-family="Arial"
+                    dy=".3em">SECONDS</text>
+                <text id="timeText" x="50%" y="50%" text-anchor="middle" fill="white" font-size="34px"
+                    font-family="Arial" dy=".3em">60</text>
+                <text x="50%" y="72%" text-anchor="middle" fill="white" font-size="8px" font-family="Arial"
+                    dy=".3em">REMAINING</text>
+            </svg>
         </div>
 
         <div id="question">
@@ -33,11 +41,11 @@
         </div>
 
 
-        
-            <div id="radioGroup">
+
+        <div id="radioGroup">
 
 
-            </div>
+        </div>
         </fieldset>
     </main>
 
@@ -52,7 +60,7 @@
 
     </footer>
     <script src="../js/benchmark.js"></script>
-        
+
 </body>
 
 </html>
