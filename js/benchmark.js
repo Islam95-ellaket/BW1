@@ -304,8 +304,5 @@ const initialize = () => {
 
 initialize()
 
-<<<<<<< HEAD
-=======
 
 
->>>>>>> origin/updateScore
