@@ -1,11 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Benchmark di Benvenuto</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
+  <div class="container">
+    <div class="content">
+      <p>Welcome to <strong> your exam </strong></p>
+   <h3> Instrucions </h3>
+    <p> we don't expect most engineers to know the answers to all of these question, so don't worry if you're unsure of a few of them </p>
+
+        <ul>
+            <li> Eache question is <b> timed </b> and can only be <b> answered once</b></li>
+            <li> Changing browser tab or opening other windows will <b> invalidate the question</b></li>
+            <li>This exam will take approx <b> 0-5 <b> </B></li>
+        </ul>
+      <div class="terms">
+        <input type="checkbox" id="acceptTerms">
+        <label for="acceptTerms">I promise to answer myself without help from anyone</label>
+      </div>
+
+      <button class="btn" id="startBtn" onclick="prosegui()">Inizia il Benchmark</button>
+    </div>
+  </div>
+
+  <script>
+    function prosegui() {
+      const acceptTerms = document.getElementById('acceptTerms').checked;
+      if (acceptTerms) {
+        window.location.href = 'domande.html'; 
+      } else {
+        alert('Devi accettare i termini per procedere!');
+      }
+    }
+  </script>
 </body>
 </html>
