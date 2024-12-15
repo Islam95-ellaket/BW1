@@ -98,53 +98,14 @@ const questions = [
     },
 ];
 
-//Funzione pagina welcome
-function checkbox() {
-    document.getElementById('proceedButton').addEventListener('click', function () {
-        const warning = document.getElementById('warning');
-        const click = document.getElementById('click').checked;
-        if (click) {
-            window.location.href = 'benchmark.html';
-        } else {
-            alert('Devi cliccare sulla checkbox per procedere!');
-        }
-    });
-}
-document.addEventListener('DOMContentLoaded', (event) => {
-    checkbox();
 
-});
-let timer;
-   let timeRemaining = 60;
-   
-   function startTimer() {
-       document.getElementById('timeText').textContent = timeRemaining;
-   
-       timer = setInterval(function() {
-           timeRemaining--;
-           document.getElementById('timeText').textContent = timeRemaining;
-           
-           let offset = 282.6 - (timeRemaining / 60) * 282.6;
-           document.querySelector("#timer circle:nth-child(2)").style.strokeDashoffset = offset;
-   
-           if (timeRemaining <= 0) {
-               clearInterval(timer);
-               window.location.href = 'benchmark.html';
-           }
-       }, 1000);
-   }
-   
-   document.querySelectorAll('input[name="answer"]').forEach((radio) => {
-       radio.addEventListener('click', function() {
-           window.location.href = 'benchmark.html';
-       });
-   });
-   
-   startTimer();
 // Funzioni pagina benchmark
 
-let score = 0; // dichiariamo e inizializziamo il punteggio
-let questionIndex
+
+
+
+let score = 0
+let timeRemaining // dichiariamo e inizializziamo il punteggio
 
 
 //Funzione per mescolare le risposte
@@ -153,31 +114,67 @@ const shuffleArray = (array) => {
         const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
     }
+    console.log(array)
     return array;
 };
+
+//Funzione per calcolare il punteggio
+
+const updateScore = (question, answer) => {
+    const correctAnswer = question.correct_answer
+    const userAnswrer = answer.getAttribute("value")
+
+    console.log(correctAnswer, userAnswrer)
+
+    if (correctAnswer === userAnswrer) {
+        console.log("corretto")
+        score += 1
+        return
+    } else if ((userAnswrer !== correctAnswer) || (timeRemaining === 0)) {
+        console.log("sbagliato")
+        return
+    }
+
+
+}
+
+const showResults = function () {
+    const viewContainer = document.getElementById("viewContainer")
+    viewContainer.style.display = "none"
+    timerDisplay.style.display = "none"
+
+    const endView = document.createElement("div")
+    endView.style.display = "block"
+    const endScore = document.getElementById("endScore")
+    endScore.innerHTML = `<h3> Il tuo punteggio è ${score}/${questions.length}</h3>`
+    const resultJudgement = document.createElement('p')
+
+    if (score >= 6) {
+
+        resultJudgement.textContent = 'promosso!'
+        endScore.appendChild(resultJudgement)
+    } else {
+        resultJudgement.textContent = 'bocciato!'
+        endScore.appendChild(resultJudgement)
+    }
+
+    return score
+}
 
 //Funzione per popolare i radio buttons
 const populateView = (questions, questionIndex) => {  //funzione che fa caricare nuovo contenitore all'interno di Questions con il punteggio ottenuto ed il responso
 
-    if (questionIndex >= questions.length) {
-        const endView = document.createElement("div") //ripulisco il container e riscrivo.
-        endView.style.display = "block"
-        const endScore = document.getElementById("endScore")
-        endScore.innerHTML = `<h3> Il tuo punteggio è ${score}/${questions.length}</h3>`
-        if (score >= 6) {
-            const resultJudgement = document.createElement('p')
-            resultJudgement.textContent = 'promosso!'
-            endScore.appendChild(resultJudgement)
-        } else {
-            resultJudgement.textContent = 'bocciato!'
-            endScore.appendChild(resultJudgement)
-        }
 
-        return score
+    if (questionIndex >= questions.length) {
+
+        showResults()
+
     }
 
-    // Seleziona una domanda
+
+
     const selectedQuestion = questions[questionIndex];
+    //console.log(questionIndex) Seleziona una domanda
 
     // mergedArray è un array unico con spread operator per fare la concatenazione di 2 array corret_answer e incorret_answers cioè ci restituisce un unico array con la somma della risposta corretta + risposte errate ovvero tutte le possibili risposte
     const mergedArray = [
@@ -205,9 +202,6 @@ const populateView = (questions, questionIndex) => {  //funzione che fa caricare
     // Aggiorna indice di QUESTION fino alla lunghezza massima di questions
     questionCount.innerHTML = `<p>QUESTION ${questionIndex + 1}/${questions.length}</p>`
 
-
-
-
     // Crea e aggiungi i radio buttons
     allAnswers.forEach((answer, index) => {
         const div = document.createElement("div")
@@ -215,13 +209,13 @@ const populateView = (questions, questionIndex) => {  //funzione che fa caricare
         const radio = document.createElement("input");
 
 
-        // Configura il radio button
+        // Configura radio button
         radio.type = "radio";
         radio.name = `answer-${questionIndex}`;
         radio.value = answer;
         radio.id = `answer-${questionIndex}-${index}`;
 
-        // Configura il label
+        // Configura label
         label.htmlFor = radio.id;
         label.textContent = answer;
 
@@ -229,50 +223,86 @@ const populateView = (questions, questionIndex) => {  //funzione che fa caricare
         radioGroup.appendChild(div);
         div.appendChild(radio);
         div.appendChild(label);
-    });
+    })
 
     // Aggiorna il testo della domanda e dei radio buttons e configura rallenta di 1 secondo il passaggio alla domanda successiva
     const inputs = document.querySelectorAll("input")
     inputs.forEach((input, index) => {
         input.addEventListener("click", (event) => {
+            updateScore(selectedQuestion, event.currentTarget)
+            nextQuestion()
             //console.log(event.currentTarget)
+            updateScore(selectedQuestion, event.currentTarget)
 
             setTimeout(() => {
                 populateView(questions, questionIndex + 1);
             }, 1000)
-
-
-
         })
     })
 
+    /*document.querySelectorAll(`input[name="answer-${questionIndex}"]`).forEach((radio) => {
+        radio.addEventListener('click', function () {
+            //window.location.href = 'benchmark.html'
+            //populateView (questions, questionIndex)
+  
+        });
+    })*/
+
+
+    clearInterval(timer)
+    startTimer();
+
+
+}
+
+//Funzionw Timer
+let timer
+let currentQuestionIndex = 0
+
+function startTimer() {
+    clearInterval(timer);
+    let timeRemaining = 5;
+    document.getElementById('timeText').textContent = timeRemaining;
+
+    timer = setInterval(function () {
+        timeRemaining--;
+        document.getElementById('timeText').textContent = timeRemaining;
+        console.log(timeRemaining)
+
+        let offset = 282.6 - (timeRemaining / 60) * 282.6;
+        document.querySelector("#timer circle:nth-child(2)").style.strokeDashoffset = offset;
+
+        if (timeRemaining <= 0) {
+            clearInterval(timer);
+            nextQuestion()
+        }
+    }, 1000);
+}
+
+
+
+function nextQuestion() {
+    clearInterval(timer)
+    currentQuestionIndex++; // Passa alla domanda successiva
+
+
+    if (currentQuestionIndex < questions.length) {  // Controlla se ci sono altre domande
+        populateView(questions, currentQuestionIndex)
+    } else {
+        // Se le domande sono finite, mostra un messaggio o reindirizza a un'altra pagina
+        showResults();
+    }
 }
 
 
 let currentView = 0
-const init = () => {
+const initialize = () => {
     populateView(questions, currentView);
 
 }
 
 
-init()
+initialize()
 
-//Funzione per calcolare il punteggio
-const updateScore = function () {
-    let count = 0
-    for (let questionNumber = 1; questionNumber<= questions.length; questionNumber++) {
-        count++
-        if ((questions.incorrect_answers) || (timeRemaining = 0)) {
 
-            continue
-        } 
-        score++
-            
-        console.log(count, score)
-    }
-    let results = [count, score]
-    return results
-}
 
-console.log('ciao')
