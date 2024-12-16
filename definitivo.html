@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benchmark Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Outfit:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="benchmark1.css"> 
+</head>
+
+<body onload="initialize()">
+    <header>
+        <div id="logo">
+            <img src="epicode_logo.png" alt="epicode logo">
+        </div>
+    </header>
+
+    <main>
+        <div id="viewContainer">
+            
+            <div id="timerDisplay">
+                <svg id="timer" viewBox="0 0 100 100" width="120" height="120">
+                    <circle cx="50" cy="50" r="45" stroke="#4A5699" stroke-width="10" fill="none" />
+                    <circle cx="50" cy="50" r="45" stroke="#00FFFF" stroke-width="10" fill="none" stroke-dasharray="282.6"
+                        stroke-dashoffset="282.6" />
+                    <text x="50%" y="28%" text-anchor="middle" fill="white" font-size="8px" font-family="Arial"
+                        dy=".3em">SECONDS</text>
+                    <text id="timeText" x="50%" y="50%" text-anchor="middle" fill="white" font-size="34px"
+                        font-family="Arial" dy=".3em">60</text>
+                    <text x="50%" y="72%" text-anchor="middle" fill="white" font-size="8px" font-family="Arial"
+                        dy=".3em">REMAINING</text>
+                </svg>
+            </div>
+
+            
+            <div id="question"></div>
+            <div id="radioGroup"></div>
+        </div>
+
+        
+        <footer id="footer">
+            <div id="questionCount"></div>
+        </footer>
+    </main>
+
+    <script src="benchmark1.js"></script> 
+</body>
+
+</html>
+
+
+
+
+
